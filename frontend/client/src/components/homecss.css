@@ -1,0 +1,122 @@
+.fold{
+    width: 100%;
+    height: 100vh; /* Set the height of your div */
+    background: linear-gradient(to right bottom,rgba(224,230,251,.9),rgba(212,220,247,.9),rgba(200,212,244,.1),rgba(168,195,240,0),rgba(224,230,251,0));
+    ackground-color: rgba(201,212,250,.8);
+    border-top:solid #03f89a02;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    overflow: hidden;
+    top:-3px;
+
+}
+
+
+.foldtext{
+    position:relative;
+    width: 70%;
+  
+    }
+    .foldtext1{
+      
+    }
+
+.foldtext2{
+      position:relative;
+   top:0px;
+     font-size: 4vh; 
+     margin:0px;
+font-weight: 900px;
+color: #000; 
+font-family: cursive; 
+font-weight: 1000px;  
+}
+.foldtexth1{
+
+margin:2px;
+font-weight: 900px;
+color: #000; 
+font-size: 4.4vh; 
+font-family: cursive; 
+font-weight: 1000px;
+margin-left:9vh;
+margin-top:9vh;
+}
+.half-right{
+    position: relative;
+    width:70%;
+    border-radius: 200%;
+}
+.imagediv{
+    top: -20vh;
+    position: relative;
+    
+}
+.img{
+    box-shadow: 0 2px 18px rgba(0, 0, 0, 0.1);
+    box-shadow: -8px 7px 20px 0px rgb(96 127 241 / 23%);
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    border-bottom-left-radius: 5vh;
+    object-fit: cover;
+
+}
+.img-overlay1{
+  
+    position: absolute;
+    bottom:0px;
+    border-bottom-left-radius: 13%;
+    background: linear-gradient(0deg, #0c0c0c75,rgba(3, 248, 154, 0),rgba(3, 248, 154, 0),rgba(3, 248, 154, 0),rgba(3, 248, 154, 0));
+    border-top:solid aqua ;
+    height: 100%;
+    width: 100%;
+}
+
+
+
+
+
+
+.search-container {
+    display: flex;
+    align-items: center;
+    
+    padding: px;
+    height:19px;
+  }
+  
+  .search-input {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 19px;
+    margin-right: 8px;
+    margin-top: 70px;
+    outline: none; /* Remove the default input focus outline */
+    width:500px;
+    height:50px;
+  }
+  
+  .search-button {
+    padding: 10px 15px;
+    font-size: 19px;
+    font-weight: 599px;
+    font-family: cursive;
+    background-color: rgb(0 221 141); /* Green color, you can change it */
+    color: #000;
+    border: none;
+    margin-top: 70px;
+    border-radius: 19px;
+    cursor: pointer;
+    outline: none; /* Remove the default button focus outline */
+    height:50px;
+    
+  }
+  
+  /* Style the button on hover */
+  .search-button:hover {
+    background-color: #a3f5da; /* Darker green color on hover, you can change it */
+  }
+  

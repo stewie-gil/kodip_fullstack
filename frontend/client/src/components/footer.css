@@ -1,0 +1,16 @@
+/* Footer.css */
+
+.footer-container {
+    background-color: #000;
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .footer-content {
+    text-align: center;
+  }
+  
+  /* Customize styles based on your design */
+  

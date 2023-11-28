@@ -1,0 +1,46 @@
+.Bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ 
+
+}
+
+.Bar ul {
+  list-style: none;
+
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 2px 18px rgba(0, 0, 0, 0.5);
+    background-color: #a3d7f5;
+ 
+  margin:5px;
+
+
+  
+}
+
+.Bar ul li {
+  display: inline-block;
+
+  font-size: 18px;
+  
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+ padding-right: 100px;
+padding-left: 100px;
+padding-top: 13px;
+padding-bottom: 13px;
+font-weight: bold;
+font-style: italic;
+color: black;
+}
+
+
+.Bar ul li:hover {
+    background-color: #a3f5da;
+  transform: scale(1.05);
+  border-radius :10px;
+  color:gray;
+
+}
