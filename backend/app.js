@@ -90,7 +90,7 @@ app.get('/', (req, res) => {
 
 
  
-const uri = "mongodb+srv://stewie-gil:777Stephen!@cluster0.ez5jfzu.mongodb.net/";
+const uri = "mongodb+srv://stewie-gil:kodipMongoDB@cluster0.ez5jfzu.mongodb.net/";
 
 const connectDB = async () => {
   try {
