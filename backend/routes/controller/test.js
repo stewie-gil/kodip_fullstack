@@ -1,10 +1,11 @@
 const axios = require('axios');
-/*
+
 //register
+/*
 const reigsterdata = {
     username: 'some_user',
-    email: 'john_doe13@example.com',
-password: 'your_passsowrd',
+    email: 'user20@gmail.com',
+password: 'anewpassword',
 UserType: 'landlord',
 }
 
@@ -18,14 +19,13 @@ console.log(response.data)
     console.error('register fail:', error)
 })
 const messdata = {sender: '6536cc58d0f01b6d8c424ad6', receiver: '6536cc58d0f01b6d8c424ad6'}
-/*
 
+/*
 //login
 
 const reigsterdata = {
-
-    email: 'john_doe12@example.com',
-password: 'john_doe12@example.com',
+  email: 'user19@gmail.com',
+  password: 'anewpassword',
 }
 
   axios.post('http://localhost:3002/api/auth/login', reigsterdata)
@@ -41,10 +41,11 @@ password: 'john_doe12@example.com',
 /*
   // logout
   const apiUrl = 'http://localhost:3002/api/auth/logout'; 
-const jwtToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjU1Y2U0MzQ0NzBkZTJkYTliZDYxMTI1IiwiZW1haWwiOiJqb2huX2RvZTEwQGV4YW1wbGUuY29tIn0sImlhdCI6MTcwMDU4NjYxMSwiZXhwIjoxNzAwNTkwMjExfQ._ldIajeKz3wnDx8ZqB12BYQ3vjeWoCRtfgcTQg238yc'
+const jwtToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjU2NjE0NzlmZTM0NmJiMmM2ZDc0NzIxIiwiZW1haWwiOiJqb2huX2RvZTEzQGV4YW1wbGUuY29tIn0sImlhdCI6MTcwMTE4OTA2MSwiZXhwIjoxNzAxMTkyNjYxfQ.ReBzOYlCPV3lGWY1BEJDPXHBozW4dpzK8ACsdIBJU0s'
+
 
 const credentials = {
-  user :'655ce434470de2da9bd61125'
+  user :'65661479fe346bb2c6d74721'
 }
 
 
@@ -160,7 +161,7 @@ axios
       console.log(allpins);
     });
 
-    */
+    
    
     axios.get('http://localhost:3002/api/auth/properties')
       .then(response => {
@@ -169,4 +170,11 @@ axios
       })
       .catch(error => {
         console.error('Error fetching data:', error);
-      });
+      });*/
+      
+      
+      axios.post('http://localhost:3002/api/auth/usersobjfromid',{id: '655ce434470de2da9bd61125'})
+      .then(response=>{
+        console.log(response.data)
+      })
+      

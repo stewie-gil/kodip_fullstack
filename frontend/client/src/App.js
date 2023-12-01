@@ -5,18 +5,20 @@ import Blog from './components/blog';
 import Footer from './components/footer';
 import Sample from './components/mini_listing';
 import SearchResults from './components/SearchResults';
-import ChatComponent from './src2/ChatComponent';
+import ChatComponent from './chat_app/ChatComponent';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AppListings from './listings/AppListings';
+import Header from './components/header';
 
 
 function App() {
   return (
     <Router>
       <div>
+      <Header />
       
         <Routes>
-          <Route path="/" element={ <> <Home /> <Sample /> <Blog />  </>  } />
+          <Route path="/" element={ <>   <Home /> <Sample /> <Blog />  </>  } />
 
           <Route path="/sample" element={<Sample />} />
           <Route path="/blog" element={<Blog />} />

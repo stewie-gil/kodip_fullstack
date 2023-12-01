@@ -34,6 +34,10 @@ function ChatComponent() {
   const [userfrompin ,SetUserFromPin] = useState([])
   
 
+
+ 
+
+
   const openMessageModal = () => {
     if (isMessageModalOpen){
       setMessageModalOpen(false);
@@ -49,10 +53,12 @@ function ChatComponent() {
 
   useEffect(() => {
     // Handle connecting to the server and receiving online users
+    //connect event is automatically emited by the client when it connects to a server.
     socket.on('connect', () => {
       console.log('Socket.io connection established');
     });
 
+    // recieve a list of online online  users
     socket.on('online users', (users) => {
       console.log("online users received", users);
       setOnlineUsers(users);
@@ -95,7 +101,7 @@ function ChatComponent() {
   
   const sendMessage = () => {
    
-
+//first have a selected user
     if (selectedUser) {
       socket.emit('private message', {
         to: selectedUser,
@@ -165,15 +171,18 @@ return messdata;
   }
 
 
-//takes in a bool : true or false for opening or closing message modal and a users email
-const messmodalfunction = async (bool, usersemail) =>{
-  console.log('messdmodal function email and bool', usersemail, bool);
-  if (usersemail) {
-  console.log('what is usersemail', usersemail, bool);
-  setMessageModalOpen(bool)
-  const emaill = usersemail
+//takes in a bool : true or false for opening or closing message modal and a pins email
+const messmodalfunction = async (bool, pinId) =>{
+  console.log('messdmodal function email and bool', pinId, bool);
+  if (pinId) {
+  const user = await axios.post('http://localhost:3002/api/auth/usersobjfromid', {id: pinId})
   
-const user = await axios.post('http://localhost:3002/api/auth/usersobj', {usersemail: emaill})
+  console.log('what is pin userobj', user, bool);
+  setMessageModalOpen(bool)
+  const emaill = user.email
+  
+  
+
 
   setSelectedUser(user.data.userobj)
  
@@ -190,34 +199,43 @@ console.log('how many time is messmodalfunction getting called/running', user.da
 
 
 
-const details = (mail, pass, username1) => {  
-  if (username1) {
+//send the users details to server so it is included as part of the online users only when the localStorage.userid changes
+useEffect(()=>{
+  if(localStorage.authToken){
+    console.log('doing a get', localStorage.userid)
 
-setEmail(mail);
-    setPassword(pass);
-    //lets now get user's username from db!! and associate a message/something with them.
-    console.log("how many times after login?")
-    setUserName(username1);
-    
-   const userobj ={
-    useremail: mail,
-    userpassword: pass,
-    userusername:username1,
-   }
-    //when we get a user we check db for name, we update our list
-    
-    setUsers([...users, userobj]);
+  axios.post('http://localhost:3002/api/auth/usersobjfromid', {id: localStorage.userid})
+  .then(user =>{
+
+
+setEmail(user.data.userobj.email);
+setPassword('not set');
+setUserName(user.data.userobj.username)
+
+const userobj = user.data.userobj
+
+
+setUsers([...users, userobj]);
     socket.emit('user login', userobj);
-    console.log(userobj);
-
-
-  }
     
 
-    //if (mail, pass, username1)
-
+  })
+  .catch(error=>{
     
+    console.log(error)}
+  
+  )
   }
+
+}, [localStorage.userid]);
+  
+
+
+  
+
+
+
+
 
 //expected  res.json({senderID : senderid._id, receiverID: receiverid._id});
 //getchathistory takes in a senders email and a recievers email and returns the chat history of the two
@@ -256,6 +274,8 @@ async function getchathistory(email, emailselect) {
   } catch (error) {
     console.error('Error in getchathistory:', error);
   }
+
+
 }
 
 
@@ -264,6 +284,15 @@ async function getchathistory(email, emailselect) {
 
 
 
+useEffect(() => {
+  // This effect will run whenever selectedUser changes
+  if (selectedUser) {
+    console.log('who have we selected', selectedUser.email);
+    //getchat history requires two emails, sender and reciever to load chat history
+    getchathistory(email, selectedUser.email);
+  }
+}, [selectedUser, email]);
+
 
 
 
@@ -271,8 +300,6 @@ async function getchathistory(email, emailselect) {
 return (
   <div className="Entirepage">
 
-<div style={{position:'absolute', right:'70px'}}>    <LoginForm getUser={details} />
-        </div>
 
     <div className="sidebar">   
    
@@ -302,25 +329,46 @@ return (
                   
                   Contacts</h3>
                 <ul id="contact-list">
+                
+                
                   {onlineUsers.map((user) => (
+                                      
                     <li key={user.email}>
 
                       <h4
                         onClick={() => {
-                          setSelectedUser(userfrompin);
+                          setSelectedUser(user);
                           
                           //getchat history requires two emails, sender and reciever to load chat history
-                          getchathistory(email, selectedUser.email);
-                          console.log('who have we selected', selectedUser.email, email)
+                         
                         }}
                         className={selectedUser.userusername === '' ? 'active-contact' : ''}
                       >
+                  
                         { console.log("userfrom pin", userfrompin.username)}
-                        <h4>{user.userusername}</h4>
-                        <h4>{userfrompin.username}</h4>
+
+                        {(user.username == localStorage.username) &&
+                          user.username
+                        }
+                        
                       </h4>
+                      <h4 onClick={() => {
+                        
+                          setSelectedUser(userfrompin);
+                          
+                          
+                          
+
+                          
+                        }}
+                        className={selectedUser.userusername === '' ? 'active-contact' : ''}
+                        
+                        >
+                          {userfrompin.username}</h4>
                     </li>
                   ))}
+
+
                 </ul>
               </div>
             </div>

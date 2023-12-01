@@ -1,55 +1,32 @@
-// Import your User model
 const User = require('../../models/userModel');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Blacklist = require('../../models/blacklisted');
 
- 
-
-
 class authController {
   async register(req, res) {
     const { username, password, email, UserType } = req.body;
-   
 
     try {
-      // Create a new user document with the provided data
+      // Hash the password before storing it
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      // Create a new user document with the hashed password
       const newUser = new User({
         username,
-        password,
+        password: hashedPassword,
         email,
-        UserType: UserType, // Set the UserType field
+        UserType: UserType,
       });
 
       // Save the new user to the database
       await newUser.save();
 
-      res.status(201).json({ message: 'User registered successfully', user: newUser });
-    } catch (error) {
-      res.status(500).json({ error: 'User registration failed', message: error.message });
-    }
-  };
-
-  async login(req, res) {
-    try {
-      const { email, password } = req.body;
-      let user = await User.findOne({ email });
-
-      if (!user) {
-        return res.status(400).json({ message: 'Invalid credentials' });
-      }
-
-      console.log(' login password: ', password)
-      console.log('user.password', user.password)
-      console.log('user.name', user.username)
-
-      
-
-            // Creating an auth session for the user with jwt
-      const payload = { 
+      // Creating an auth session for the user with jwt immediately after registration
+      const payload = {
         user: {
-          id: user.id,
-          email: user.email
+          id: newUser.id,
+          email: newUser.email,
         },
       };
       const secret = 'secretkey';
@@ -58,12 +35,49 @@ class authController {
 
       console.log('Generated token: ', token);
 
-      res.status(200).json({ 'token': token, 'username': user.username });
+      res.status(201).json({ message: 'User registered successfully', user: newUser, token });
+    } catch (error) {
+      res.status(500).json({ error: 'User registration failed', message: error.message });
+    }
+  }
+
+  async login(req, res) {
+    try {
+      const { email, password } = req.body;
+      const user = await User.findOne({ email });
+
+      if (!user) {
+        return res.status(400).json({ message: 'Invalid credentials' });
+      }
+
+      // Compare the provided password with the hashed password in the database
+      const isPasswordMatch = await bcrypt.compare(password, user.password);
+
+      if (!isPasswordMatch) {
+        return res.status(400).json({ message: 'Invalid credentials' });
+      }
+
+      // Creating an auth session for the user with jwt
+      const payload = {
+        user: {
+          id: user.id,
+          email: user.email,
+        },
+      };
+      const secret = 'secretkey';
+
+      const token = jwt.sign(payload, secret, { expiresIn: '1h' });
+
+      console.log('Generated token: ', token);
+
+      res.status(200).json({ token, userid: user.id, username: user.username });
     } catch (error) {
       console.error(error.message);
       res.status(500).send('Server Error');
     }
-  };
+  }
+
+
 
 
 //post new property info
@@ -119,8 +133,19 @@ try{
 }
 
 
-
-
+//takes in users id and returns users object
+async usersobjFromId(req, res){
+  const {id} = req.body;
+  try{
+    let userobj = await User.findOne({_id: id});
+  
+    res.json({userobj});
+    console.log('userobj', userobj)
+  
+  } catch(error){
+    res.json({Error : error})
+  }
+  }
 
 
 

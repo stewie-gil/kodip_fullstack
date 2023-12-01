@@ -7,7 +7,7 @@ function Home() {
   return (
     <div className="fold">
       <div className="foldtext">
-        <h2 className='foldtext2'>Kodip!</h2>
+        <h2 className='foldtext2'>  </h2>
 
         <h1 className='foldtexth1'>
           House hunting can be hard <br />

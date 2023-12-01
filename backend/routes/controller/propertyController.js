@@ -46,7 +46,7 @@ async userswithpin(req, res){
     try{
     const users = await basemodel.find({ pushpin: { $exists: true }});
 
-    console.log('users with pin', users)
+    
   
     res.json({users: users});
     //console.log('users', users)

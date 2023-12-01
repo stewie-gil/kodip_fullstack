@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Header from './components/header';
+
 import Footer from './components/Footer';
 import SearchBox from './components/SearchBox';
 import PropertyListing from './components/PropertyListing';
@@ -48,7 +48,7 @@ function AppListings() {
   // JSX
   return (
     <div>
-      <Header />
+    
 
       <SearchBox
         searchQuery={searchQuery}
