@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './Header.module.css';
 import PostData from './postData';
 //import LoginForm from './loginform';
+import LoginForm from './loginForm';
 
 
 
@@ -15,8 +16,10 @@ return (
         <ul>
             <li> About  </li>
             <li>Contact</li>
+            
             {/*<LoginForm className={styles.PostData}/> */}
             <PostData className={styles.PostData}/>
+           
         </ul>
     </nav>
 </div>

@@ -24,7 +24,7 @@ function MapComponent(prop) {
       const extractedData = response.data.users.map((item) => {
         
        
-        const email = item.email
+        const email = item.owner // id of the pin's owner
         const image = item.imageUrls
         const { location, infoboxOption } = item.pushpin;
         
@@ -56,11 +56,13 @@ function MapComponent(prop) {
 
 function handlePinClick(email) {
       prop.setmessagemodal(true, email);
+     
   }
 
 function createPinClickHandler(email) {
     return () => {
     handlePinClick(email);
+    
   };
 }
 

@@ -44,10 +44,14 @@ io.on('connection', (socket) => {
 
   socket.on('user login', (userobj) => {
     
-    console.log('Someone logged in: ', userobj.userusername);
-    users.push({ socket, userobj });
-    
-    io.emit('online users', users.map((user) => user.userobj));
+    console.log('Someone logged in: ', userobj.username);
+
+    const objexists = users.some(user=> user.id === userobj.id)
+//if a userobj does not exists in online users push it
+    if(!objexists){
+       users.push({ socket, userobj });    
+    }
+   io.emit('online users', users.map((user) => user.userobj));
     //console.log('after user push', users)
   });
  
@@ -86,7 +90,7 @@ app.get('/', (req, res) => {
 
 
  
-const uri = "mongodb+srv://stewie-gil:###@cluster0.ez5jfzu.mongodb.net/";
+const uri = "mongodb+srv://stewie-gil:777Stephen!@cluster0.ez5jfzu.mongodb.net/";
 
 const connectDB = async () => {
   try {

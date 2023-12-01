@@ -44,4 +44,6 @@ router.post('/userswithpin', propertyController.userswithpin);
 
 //gets a users obj for you
 router.post('/usersobj', authController.usersobj);
+
+router.post('/usersobjfromId', authController.usersobjFromId)
 module.exports = router;
