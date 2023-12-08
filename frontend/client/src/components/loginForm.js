@@ -22,6 +22,7 @@ const auth = firebase.auth();
 
 
 
+
 function LoginForm(prop) {
   const [modalOpen, setModalOpen] = useState(false);
   const [email, setEmail] = useState('');
@@ -33,7 +34,59 @@ function LoginForm(prop) {
   const [loginerror, setloginerror] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
 
- console.log('what we got in storage', localStorage)
+ 
+
+
+
+
+
+// who wants some cookies? 
+//Lets set them below 
+function setCookie(name, value, days) {
+  const expires = new Date();
+  expires.setTime(expires.getTime() + days *60 * 60 * 1000);
+  document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
+  console.log('cookie set successfully:', document.cookie)
+}
+
+
+
+//use this function when getting cookies.
+function getCookie(name) {
+  const cookies = document.cookie.split('; ');
+  for (const cookie of cookies) {
+      const [cookieName, cookieValue] = cookie.split('=');
+      if (cookieName === name) {
+          return cookieValue;
+      }
+  }
+  return null;
+}
+
+// Get the value of the 'authToken' cookie
+const authToken = getCookie('authToken');
+
+
+//delete cookie if user logs out
+function deleteCookie(name) {
+  document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
+  localStorage.setItem('userid', '');
+  localStorage.setItem('username', '');
+  console.log('cookie deleted successfully and storage cleared!', document.cookie)
+  console.log('what is left of localstorage', localStorage)
+}
+
+
+if(authToken === null){
+  localStorage.setItem('userid', '');
+  localStorage.setItem('username', '');
+  localStorage.setItem('email', '');
+  
+}
+
+
+
+
 
 
 
@@ -50,7 +103,7 @@ function LoginForm(prop) {
 
 
   useEffect(() => {
-    if (localStorage.getItem('authToken') !== null) {
+    if (authToken !== null) {
       setLoggedIn(true);
       setUserName(true);
      
@@ -69,7 +122,7 @@ function LoginForm(prop) {
       setLoggedIn(true);
       setName(name);
       setModalOpen(false); // Close the modal after successful login
-
+      localStorage.setItem('email', email);
       
       
 
@@ -87,14 +140,15 @@ function LoginForm(prop) {
       const {username, token, userid} = response.data;
      
       // Storing the token in local storage
-      localStorage.setItem('authToken', token);
+      setCookie('authToken', token, 7);
       localStorage.setItem('userid', userid);
       localStorage.setItem('username', username);
+      localStorage.setItem('email', email);
 
       setUserName(username)
       // will check if token is invalid later etc...
       console.log('username after axios post:', username);
-      prop.getUser(email, password, username);
+     
       })
       .catch((error)=>{
 
@@ -110,7 +164,7 @@ function LoginForm(prop) {
   };
 
 
-  
+  console.log(localStorage)
 
 
 
@@ -127,7 +181,7 @@ function LoginForm(prop) {
       setModalOpen(false); // Close the modal after successful sign up
 
       //sending details back to app.js
-      //prop.getUser(email, password, name);
+    
 
       
       //send details to authController in the backend via a post to API.
@@ -143,6 +197,11 @@ function LoginForm(prop) {
     .then((response) =>{
     console.log('register successful')
     console.log(response.data)
+
+    setCookie('authToken', response.data.token, 3);
+    localStorage.setItem('userid', response.data.user._id);
+    localStorage.setItem('username', response.data.user.username);
+    localStorage.setItem('email', response.data.user.email);
     
     }).catch((error)=>{
       console.error('faild to send to backend. Error:', error)
@@ -160,6 +219,8 @@ function LoginForm(prop) {
     }
   };
 
+
+
   const handleLogout = async () => {
     try {
 
@@ -170,6 +231,8 @@ function LoginForm(prop) {
     } catch (error) {
       console.log(error);
     }
+    //Delete the 'authToken' cookie
+    deleteCookie('authToken');
   };
 
 
@@ -181,6 +244,8 @@ const toggleDropdownFalse = () =>
 {
   setShowDropdown(false);
 }
+
+
 
   return (
     <div >

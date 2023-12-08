@@ -106,8 +106,8 @@ async getusers(req, res){
 let senderid = await User.findOne({ email:sender });
 let receiverid = await User.findOne({ email: receiver });
 
-  res.json({senderID : senderid._id, receiverID: receiverid._id});
-  console.log(`senderID : ${senderid._id}, receiverID: ${receiverid._id}`)
+  res.json({senderID : senderid.id, receiverID: receiverid.id});
+  console.log(`senderID : ${senderid.id}, receiverID: ${receiverid.id}`)
 
   }catch(error){
     console.log(error)

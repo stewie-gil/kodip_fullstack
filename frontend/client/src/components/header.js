@@ -17,7 +17,7 @@ return (
             <li> About  </li>
             <li>Contact</li>
             
-            {/*<LoginForm className={styles.PostData}/> */}
+            <LoginForm className={styles.PostData}/>
             <PostData className={styles.PostData}/>
            
         </ul>
