@@ -172,9 +172,25 @@ axios
         console.error('Error fetching data:', error);
       });*/
       
-      
-      axios.post('http://localhost:3002/api/auth/usersobjfromid',{id: '655ce434470de2da9bd61125'})
-      .then(response=>{
-        console.log(response.data)
+
+      const loginData = {
+     
+        email: 'user25@gmail.com',
+    password: 'user25@gmail.com',
+   
+    }
+    
+     
+      axios.post('http://localhost:3002/api/auth/login', loginData)
+      .then((response) =>{
+    
+     
+      // Storing the token in local storage
+        console.log(response);
+      //prop.getUser(email, password, username);
+      })
+      .catch((error)=>{
+
+          console.error('login fail:', error, loginData)
       })
       

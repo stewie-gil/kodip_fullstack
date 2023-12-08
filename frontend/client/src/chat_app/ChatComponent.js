@@ -289,7 +289,7 @@ useEffect(() => {
   if (selectedUser) {
     console.log('who have we selected', selectedUser.email);
     //getchat history requires two emails, sender and reciever to load chat history
-    getchathistory(email, selectedUser.email);
+    getchathistory(localStorage.email, selectedUser.email);
   }
 }, [selectedUser, email]);
 
@@ -345,21 +345,15 @@ return (
                         className={selectedUser.userusername === '' ? 'active-contact' : ''}
                       >
                   
-                        { console.log("userfrom pin", userfrompin.username)}
+                        { console.log("userfrom pin", user)}
 
-                        {(user.username == localStorage.username) &&
-                          user.username
-                        }
+                        {user.username   }
                         
                       </h4>
                       <h4 onClick={() => {
                         
                           setSelectedUser(userfrompin);
-                          
-                          
-                          
-
-                          
+                                                    
                         }}
                         className={selectedUser.userusername === '' ? 'active-contact' : ''}
                         
